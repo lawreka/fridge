@@ -7,27 +7,23 @@ import { Input } from '../Input/Input';
 
 import { Background } from './styles';
 
-// const exampleFragments = {
-//     a: { top: 20, left: 80, title: 'Boooop' },
-//     b: { top: 180, left: 20, title: 'Drag me too' },
-// }
-
 export const Fridge = () => {
     const [fragments, setFragments] = useState({});
 
     const addFragment = (nu) => {
         const old = fragments;
         const index = Object.keys(old).length + 1;
-        
-        console.log(old);
-        console.log(old.length + 1 || 0);
         setFragments({ ...old, [index]: { ...nu }});
     }
 
-    console.log(fragments);
+    const addBulk = (bulk) => {
+        const old = fragments;
+        setFragments({ ...old, ...bulk })
+    }
+
     return (
         <Background>
-            <Input fragments={fragments} addFragment={addFragment} />
+            <Input fragments={fragments} addFragment={addFragment} addBulk={addBulk} />
             <DndProvider backend={HTML5Backend}>
                 <Container fragments={fragments} setFragments={setFragments} />
             </DndProvider>
