@@ -1,7 +1,18 @@
 import React, { createRef, useState } from 'react';
 import { CSVReader } from 'react-papaparse';
 
-import { Wrapper, HideCSV, HideSingle, HelpText, CSVInput, FileName, Error, SingleInput, TextSubmit } from './styles';
+import {
+    Wrapper,
+    HideCSV,
+    HideSingle,
+    HelpText,
+    CSVInput,
+    FileName,
+    Error,
+    SingleInput,
+    TextSubmit,
+    SubmitButton
+} from './styles';
 
 export const Input = ({ fragments, addFragment, addBulk }) => {
     const buttonRef = createRef();
@@ -13,8 +24,8 @@ export const Input = ({ fragments, addFragment, addBulk }) => {
     const getRandomPosition = () => {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const top = Math.floor(Math.random() * height);
-        const left = Math.floor(Math.random() * width);
+        const top = Math.floor(Math.random() * (height - height * 0.05));
+        const left = Math.floor(Math.random() * (width - width * 0.05));
         return { top, left }
     }
 
@@ -80,12 +91,11 @@ export const Input = ({ fragments, addFragment, addBulk }) => {
                             {({ file }) => {
                                 return (
                                     <CSVInput>
-                                        <button
+                                        <SubmitButton
                                             type="button"
                                             onClick={handleOpenDialog}
-                                        >
-                                            Import csv
-                                        </button>
+                                            value="Import csv"
+                                        />
                                         <FileName>{file && file.name}</FileName>
                                         {file && errorMessage && (<Error>Warning: {errorMessage}</Error>)}
                                     </CSVInput>
@@ -98,7 +108,7 @@ export const Input = ({ fragments, addFragment, addBulk }) => {
                 {!singleInputHidden && (
                     <>
                         <SingleInput onSubmit={handleSubmit}>
-                            <input type="text" value={value} onChange={handleChange} autoComplete="off" />
+                            <SubmitButton type="text" value={value} onChange={handleChange} autoComplete="off" />
                             <TextSubmit type="submit" value="Submit" />
                         </SingleInput>
                         <HelpText>Add magnets one at a time</HelpText>

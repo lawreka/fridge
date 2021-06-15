@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 
-export const HideCSV = styled.a`
+export const HideCSV = styled.button`
     position: fixed;
     top: 4px;
     left: 4px;
     z-index: 3;
+    cursor: pointer;
 `;
 
-export const HideSingle = styled.a`
+export const HideSingle = styled.button`
     position: fixed;
     top: 26px;
     left: 4px;
     z-index: 3;
+    cursor: pointer;
 `;
 
 export const Wrapper = styled.div`
@@ -45,4 +47,8 @@ export const Error = styled.div`
 
 export const TextSubmit = styled.input`
     margin-left: 8px;
+`;
+
+export const SubmitButton = styled.input`
+    cursor: pointer;
 `;
