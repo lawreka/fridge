@@ -13,7 +13,6 @@ export const Fridge = ({
     setFragments,
     deleteFragment,
 }) => {
-    console.log(isMobile);
     return (
         <Background id="fridge-background">
             {isMobile ? (
