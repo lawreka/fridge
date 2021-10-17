@@ -7,7 +7,7 @@ export const RandomButton = styled.button`
 
 export const Definition = styled.div`
     font-style: italic;
-    max-width: calc(15vw);
+    max-width: ${({ isMobile }) => isMobile ? '' : 'calc(15vw)'};
 `;
 
 export const AddButton = styled.button`

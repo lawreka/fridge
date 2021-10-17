@@ -1,4 +1,5 @@
 import React, { createRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import { CSV } from './CSV/CSV';
 import { Random } from './Random/Random';
@@ -93,7 +94,9 @@ export const Input = ({
                 )}
                 {!singleInputHidden && (
                     <>
-                        <HelpText>Add magnets one at a time</HelpText>
+                        <HelpText isMobile={isMobile}>
+                            Add magnets one at a time
+                        </HelpText>
                         <SingleInput onSubmit={handleSubmit} id="word-input-form">
                             <WordInput
                                 type="text"

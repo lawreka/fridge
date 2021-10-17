@@ -22,7 +22,7 @@ export const HideSingle = styled.button`
 export const HelpText = styled.div`
     font-size: 14px;
     margin-bottom: 8px;
-    max-width: calc(15vw);
+    max-width: ${({ isMobile }) => isMobile ? '' : 'calc(15vw)'};
 `;
 
 export const SingleInput = styled.form`

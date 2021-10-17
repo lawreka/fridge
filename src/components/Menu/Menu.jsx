@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import { Input } from '../Input/Input';
 import { HelpText } from '../Input/styles';
@@ -28,7 +29,7 @@ export const Menu = ({
                 setSingleInputHidden={setSingleInputHidden}
             />
             <TrashWrapper id="trash-wrapper">
-                <HelpText>
+                <HelpText isMobile={isMobile}>
                     Drag magnets into the trash zone below to delete them
                 </HelpText>
                 <TrashZone id="trash-zone" />

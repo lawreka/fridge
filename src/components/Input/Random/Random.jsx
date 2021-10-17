@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import { getRandomPosition } from '../utils';
 import {
@@ -15,7 +16,6 @@ export const Random = ({ addFragment }) => {
         const randomWord = await fetch('https://random-words-api.vercel.app/word')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 return data;
             });
         if (randomWord) {
@@ -44,7 +44,9 @@ export const Random = ({ addFragment }) => {
                 Get random word
             </RandomButton>
             <div>{previewWord}</div>
-            <Definition>{previewDefinition}</Definition>
+            <Definition isMobile={isMobile}>
+                {previewDefinition}
+            </Definition>
             {previewWord ? (
                 <div>
                     <AddButton onClick={addRandomWord}>
