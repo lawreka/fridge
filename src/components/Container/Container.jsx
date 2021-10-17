@@ -5,8 +5,11 @@ import update from 'immutability-helper';
 import { Box } from '../Box/Box';
 import { StyledContainer } from './styles';
 
-export const Container = ({ fragments, setFragments }) => {
-    
+export const Container = ({
+    fragments,
+    setFragments,
+    deleteFragment
+}) => {    
     const moveBox = useCallback((id, left, top) => {
         setFragments(update(fragments, {
             [id]: {
@@ -21,13 +24,25 @@ export const Container = ({ fragments, setFragments }) => {
             const delta = monitor.getDifferenceFromInitialOffset();
             const left = Math.round(item.left + delta.x);
             const top = Math.round(item.top + delta.y);
+            const trashZone = document.getElementById('trash-zone');
+            const trashCoords = trashZone.getBoundingClientRect();
+            const {
+                top: trashTop,
+                right: trashRight,
+                bottom: trashBottom,
+                left: trashLeft
+            } = trashCoords;
+            if (left > trashLeft && left < trashRight && top > trashTop && top < trashBottom) {
+                deleteFragment(item.id);
+                return;
+            }
             moveBox(item.id, left, top);
             return undefined;
         },
     }), [moveBox]);
     
     return (
-        <StyledContainer ref={drop}>
+        <StyledContainer ref={drop} id="drag-area-container">
             {Object.keys(fragments).map((key) => {
                 const { left, top, title } = fragments[key];
                 return (<Box key={key} id={key} left={left} top={top} hideSourceOnDrag={true}>

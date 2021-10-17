@@ -1,54 +1,41 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+`;
+
 export const HideCSV = styled.button`
-    position: fixed;
-    top: 4px;
-    left: 4px;
-    z-index: 3;
     cursor: pointer;
+    width: max-content;
+    margin-bottom: 16px;
 `;
 
 export const HideSingle = styled.button`
-    position: fixed;
-    top: 26px;
-    left: 4px;
-    z-index: 3;
     cursor: pointer;
-`;
-
-export const Wrapper = styled.div`
-    position: fixed;
-    top: 56px;
-    left: 4px;
-    z-index: 2;
+    width: max-content;
+    margin-bottom: 16px;
 `;
 
 export const HelpText = styled.div`
     font-size: 14px;
     margin-bottom: 8px;
-`;
-
-export const CSVInput = styled.div`
-    display: flex;
-    margin-bottom: 16px;
+    max-width: calc(15vw);
 `;
 
 export const SingleInput = styled.form`
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
 `;
 
-export const FileName = styled.div`
-    margin-left: 8px;
+export const WordInput = styled.input`
+    max-width: 100%;
+    margin-bottom: 16px;
 `;
 
-export const Error = styled.div`
-    margin-left: 8px;
-`;
-
-export const TextSubmit = styled.input`
-    margin-left: 8px;
-`;
-
-export const SubmitButton = styled.input`
-    cursor: pointer;
+export const WordInputSubmit = styled.input`
+    width: max-content;
 `;

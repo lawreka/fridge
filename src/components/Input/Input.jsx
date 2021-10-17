@@ -1,33 +1,30 @@
 import React, { createRef, useState } from 'react';
-import { CSVReader } from 'react-papaparse';
 
+import { CSV } from './CSV/CSV';
+import { Random } from './Random/Random';
+import { getRandomPosition } from './utils';
 import {
     Wrapper,
     HideCSV,
     HideSingle,
     HelpText,
-    CSVInput,
-    FileName,
-    Error,
     SingleInput,
-    TextSubmit,
-    SubmitButton
+    WordInput,
+    WordInputSubmit
 } from './styles';
 
-export const Input = ({ fragments, addFragment, addBulk }) => {
+export const Input = ({
+    fragments,
+    addFragment,
+    addBulk,
+    csvInputHidden,
+    setCSVInputHidden,
+    singleInputHidden,
+    setSingleInputHidden,
+}) => {
     const buttonRef = createRef();
     const [value, setValue] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
-    const [csvInputHidden, setCSVInputHidden] = useState(true);
-    const [singleInputHidden, setSingleInputHidden] = useState(true);
-
-    const getRandomPosition = () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const top = Math.floor(Math.random() * (height - height * 0.05));
-        const left = Math.floor(Math.random() * (width - width * 0.05));
-        return { top, left }
-    }
 
     const handleChange = (e) => {
         setValue(e.target.value);
@@ -53,7 +50,6 @@ export const Input = ({ fragments, addFragment, addBulk }) => {
             const error = dataWithErrors.errors[0].message;
             setErrorMessage(error);
         }
-
         let csvData = data;
         let bulkFragments = {};
         const old = fragments;
@@ -75,47 +71,45 @@ export const Input = ({ fragments, addFragment, addBulk }) => {
     }
 
     return (
-        <>
-            <HideCSV onClick={handleHideShowCSVInput}>{csvInputHidden ? (`Show CSV input`): (`Hide CSV input`)}</HideCSV>
-            <HideSingle onClick={handleHideShowSingleInput}>{singleInputHidden ? (`Show word input`) : (`Hide word input`)}</HideSingle>
-                <Wrapper>
+        <Wrapper id="input-controls-wrapper">
+            {singleInputHidden ? (
+                <HideCSV onClick={handleHideShowCSVInput}>
+                        {csvInputHidden ? (`Show CSV input`): (`Hide CSV input`)}
+                </HideCSV>
+            ): null}
+            {csvInputHidden ? (
+                <HideSingle onClick={handleHideShowSingleInput}>
+                    {singleInputHidden ? (`Show word input`) : (`Hide word input`)}
+                </HideSingle>
+            ): null}
+            <>
                 {!csvInputHidden && (
-                    <>
-                        <CSVReader
-                            ref={buttonRef}
-                            onFileLoad={handleOnFileLoad}
-                            noClick
-                            noDrag
-                            noProgressBar
-                        >
-                            {({ file }) => {
-                                return (
-                                    <CSVInput>
-                                        <SubmitButton
-                                            type="button"
-                                            onClick={handleOpenDialog}
-                                            value="Import csv"
-                                        />
-                                        <FileName>{file && file.name}</FileName>
-                                        {file && errorMessage && (<Error>Warning: {errorMessage}</Error>)}
-                                    </CSVInput>
-                                )
-                            }}
-                        </CSVReader>
-                        <HelpText>Upload a column of words as csv to make a bunch of magnets</HelpText>
-                    </>
+                    <CSV
+                        buttonRef={buttonRef}
+                        handleOnFileLoad={handleOnFileLoad}
+                        handleOpenDialog={handleOpenDialog}
+                        errorMessage={errorMessage}
+                    />
                 )}
                 {!singleInputHidden && (
                     <>
-                        <SingleInput onSubmit={handleSubmit}>
-                            <SubmitButton type="text" value={value} onChange={handleChange} autoComplete="off" />
-                            <TextSubmit type="submit" value="Submit" />
-                        </SingleInput>
                         <HelpText>Add magnets one at a time</HelpText>
+                        <SingleInput onSubmit={handleSubmit} id="word-input-form">
+                            <WordInput
+                                type="text"
+                                value={value}
+                                onChange={handleChange}
+                                autoComplete="off"
+                                id="word-input"
+                            />
+                            <WordInputSubmit type="submit" value="Submit" id="submit-word" />
+                        </SingleInput>
                     </>
                 )}
-                </Wrapper>
-            {}
-        </>
+            </>
+            {singleInputHidden && csvInputHidden && (
+                <Random addFragment={addFragment} />
+            )}
+        </Wrapper>
     );
 }

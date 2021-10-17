@@ -1,31 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { Container } from '../Container/Container';
-import { Input } from '../Input/Input';
 
 import { Background } from './styles';
 
-export const Fridge = () => {
-    const [fragments, setFragments] = useState({});
-
-    const addFragment = (nu) => {
-        const old = fragments;
-        const index = Object.keys(old).length + 1;
-        setFragments({ ...old, [index]: { ...nu }});
-    }
-
-    const addBulk = (bulk) => {
-        const old = fragments;
-        setFragments({ ...old, ...bulk })
-    }
-
+export const Fridge = ({
+    fragments,
+    setFragments,
+    deleteFragment,
+}) => {
     return (
-        <Background>
-            <Input fragments={fragments} addFragment={addFragment} addBulk={addBulk} />
+        <Background id="fridge-background">
             <DndProvider backend={HTML5Backend}>
-                <Container fragments={fragments} setFragments={setFragments} />
+                <Container
+                    fragments={fragments}
+                    setFragments={setFragments}
+                    deleteFragment={deleteFragment}
+                />
             </DndProvider>
         </Background>
     );
