@@ -4,7 +4,6 @@ import { getRandomPosition } from '../utils';
 import {
     RandomButton,
     Definition,
-    AddDeleteButtons,
     AddButton
 } from './styles';
 
