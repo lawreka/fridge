@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Fridge } from '../Fridge/Fridge';
-import { Menu } from '../Menu/Menu';
+import { Menu } from '../Menu/Menu';
+import { getRandomPosition } from '../Input/utils';
 
 import { AppWrapper } from './styles';
+import { sampleWords } from './constants';
 
 export const App = () => {
   const [fragments, setFragments] = useState({});
   const [deletedFragments, setDeletedFragments] = useState(0);
+
+  useEffect(() => {
+    let starterWords = {};
+    for (let i = 0; i < sampleWords.length; i++) {
+      const fragment = sampleWords[i];
+      const position = getRandomPosition();
+      starterWords[i] = { ...position, title: fragment };
+    }
+    addBulk(starterWords);
+  }, []);
 
   const addFragment = (nu) => {
     const old = fragments;

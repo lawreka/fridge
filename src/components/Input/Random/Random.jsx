@@ -13,7 +13,7 @@ export const Random = ({ addFragment }) => {
     const [previewDefinition, setPreviewDefinition] = useState('');
 
     const getRandomWord = async () => {
-        const randomWord = await fetch('https://random-words-api.vercel.app/word')
+        const randomWord = await fetch('https://san-random-words.vercel.app/')
             .then(response => response.json())
             .then(data => {
                 return data;

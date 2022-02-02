@@ -1,9 +1,9 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { CSV } from './CSV/CSV';
-import { Random } from './Random/Random';
-import { getRandomPosition } from './utils';
+import { CSV } from './CSV/CSV';
+import { Random } from './Random/Random';
+import { getRandomPosition } from './utils';
 import {
     Wrapper,
     HideCSV,
