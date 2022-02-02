@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Fridge } from '../Fridge/Fridge';
 import { Menu } from '../Menu/Menu';
@@ -11,26 +11,16 @@ export const App = () => {
   const [fragments, setFragments] = useState({});
   const [deletedFragments, setDeletedFragments] = useState(0);
 
-  useEffect(() => {
-    let starterWords = {};
-    for (let i = 0; i < sampleWords.length; i++) {
-      const fragment = sampleWords[i];
-      const position = getRandomPosition();
-      starterWords[i] = { ...position, title: fragment };
-    }
-    addBulk(starterWords);
-  }, []);
-
   const addFragment = (nu) => {
     const old = fragments;
     const index = Object.keys(old).length + 1 + deletedFragments;
     setFragments({ ...old, [index]: { ...nu } });
   }
 
-  const addBulk = (bulk) => {
+  const addBulk = useCallback((bulk) => {
     const old = fragments;
     setFragments({ ...old, ...bulk })
-  }
+  }, [fragments]);
 
   const deleteFragment = (id) => {
     const old = fragments;
@@ -38,6 +28,18 @@ export const App = () => {
     setDeletedFragments(deletedFragments + 1);
     setFragments({ ...old });
   }
+
+  useEffect(() => {
+    window.addEventListener('load', () => {
+      let starterWords = {};
+      for (let i = 0; i < sampleWords.length; i++) {
+        const fragment = sampleWords[i];
+        const position = getRandomPosition();
+        starterWords[i] = { ...position, title: fragment };
+      }
+      addBulk(starterWords);
+    });
+  }, [addBulk]);
 
   return (
     <AppWrapper>
